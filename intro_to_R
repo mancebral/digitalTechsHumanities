@@ -1,0 +1,41 @@
+#Sesión de introducción a la herramienta R
+
+#calculadora
+((8-6)*2)^2
+
+#objetos y funciones
+a <- 8-6.4 # <- flecha alt + guion
+doble <- function(x) {x*2}
+
+doble(a)^2
+
+#tipos de objetos
+#numeric
+as.integer(a)
+#caracteres
+texto <- "Hola, mundo!"
+#valores logicos
+valorLogico <- TRUE
+valorLogico2 <- FALSE
+
+#combinacion objetos o vectores
+acreedores <- c("Juan", "Fernanda", "Laura")
+deudores <- c("Álvaro", "Ángel", "Luisa")
+deuda <- c(10, 25, 30)
+consumido <- c(FALSE, FALSE, TRUE)
+
+length(acreedores) #longitud de un elemento
+
+baseDatos <- data.frame(acreedores, deudores, deuda, consumido)
+
+#cargar librerías
+library(tidyverse)
+baseDatos2 <- baseDatos %>% #ctrl+shift+m
+  arrange(desc(deuda)) %>% 
+  mutate(interes= deuda*0.15) %>% 
+  mutate(total=deuda+interes)
+
+ggplot(baseDatos2, aes(x= deudores, 
+                       y= deuda,
+                       fill=interes)) + 
+  geom_col ()
