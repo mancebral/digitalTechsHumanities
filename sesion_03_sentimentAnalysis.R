@@ -7,22 +7,18 @@
 #crea un directorio para trabajar con este ejercicio
 #cambia el directorio de trabajo mediante setwd()
 #o mediante la pestaña Files > More > Set as working directory
-setwd("~/R/PROJECTS/Tecnologias_Digitales")
 
 #cargamos el archivo
 emotionalMessages <- read.delim("emotionalMessages.txt", 
                                 header = FALSE)
 
+#corre emortionnalMessages para saber cuál es el vector sobre el que vas a trabajar
+emotionalMessages
+
 #aplicamos unnest_tokens sobre el vector V1
 emotionalWords <- emotionalMessages %>% 
-  #unnest_tokens(message, V1, token = "paragraphs") %>% 
-  #separate(message, c("messageNumber", "message"), sep = "\\. ") %>% 
-  #mutate(messageNumber=as.numeric(messageNumber)) %>% 
-  #group_by(messageNumber) %>% 
   unnest_tokens(word, V1) %>% 
   count(word, sort = TRUE) 
-#%>% 
-  #ungroup()
 
 #curioso, hay más miedo que sorpresa!
 emotionalPlot <- emotionalWords %>% 
@@ -40,7 +36,7 @@ emotionalPlot <- emotionalWords %>%
 ggsave("emotionalPlot.jpg", emotionalPlot,
        height = 6, width = 10, dpi = 300)
 
-#vamos a ñadir una columna para adjudicar un color a cada emoción:
+#vamos a añadir una columna para adjudicar un color a cada emoción:
 emotionalNRC <- emotionalWords %>% 
   inner_join(diccNRC) %>% 
   group_by(sentiment, word) %>% 
@@ -58,7 +54,7 @@ emotionalNRC <- emotionalWords %>%
          color=ifelse(sentiment=="anger", "#ff006e", color))
 
 #cargamos la librería wordcloud2
-#sino la tienen iinstalada, recuerden que tienen que instalarla previamente
+#sino la tienen instalada, recuerden que tienen que instalarla previamente
 library(wordcloud2)
 
 emotionalNRC %>%   select(word, total, sentiment) %>% 
