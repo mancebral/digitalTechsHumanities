@@ -1,3 +1,6 @@
+# install.packages(c("tidyverse", "datasets", "plot3D", "gsbm", "igraph", "tidygraph",
+#                  "ggraph"))
+
 library(tidyverse)
 library(datasets)
 
